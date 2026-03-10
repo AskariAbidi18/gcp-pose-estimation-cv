@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
+from tqdm import tqdm
 
 from dataset.gcp_dataset import GCPDataset
 from dataset.transforms import get_train_transforms
@@ -8,7 +9,6 @@ from models.gcp_model import GCPModel
 
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
-
 
 dataset = GCPDataset(
     "/content/GCP_Assignment_Datasets/train_dataset",
@@ -19,33 +19,30 @@ loader = DataLoader(
     dataset,
     batch_size=32,
     shuffle=True,
-    num_workers=2,
-    pin_memory=True
+    num_workers=0
 )
 
-
 model = GCPModel().to(device)
-
 
 keypoint_loss = nn.MSELoss()
 shape_loss = nn.CrossEntropyLoss()
 
 optimizer = torch.optim.Adam(model.parameters(), lr=3e-4)
 
-
 EPOCHS = 10
+
+best_loss = float("inf")
 
 
 for epoch in range(EPOCHS):
 
     model.train()
 
-    total_loss = 0
+    epoch_loss = 0
 
-    for i, (images, keypoints, labels) in enumerate(loader):
+    pbar = tqdm(loader, desc=f"Epoch {epoch+1}/{EPOCHS}")
 
-        if i % 10 == 0:
-            print("batch", i)
+    for images, keypoints, labels in pbar:
 
         images = images.to(device)
         keypoints = keypoints.to(device)
@@ -62,9 +59,14 @@ for epoch in range(EPOCHS):
         loss.backward()
         optimizer.step()
 
-        total_loss += loss.item()
+        epoch_loss += loss.item()
 
-    print(f"Epoch {epoch+1} Loss {total_loss:.4f}")
+        pbar.set_postfix(loss=loss.item())
 
+    print(f"Epoch {epoch+1} Loss {epoch_loss:.4f}")
 
-torch.save(model.state_dict(), "gcp_model.pth")
+    # save best model
+    if epoch_loss < best_loss:
+        best_loss = epoch_loss
+        torch.save(model.state_dict(), "gcp_model.pth")
+        print("Saved new best model")
