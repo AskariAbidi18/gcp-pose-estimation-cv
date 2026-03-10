@@ -17,7 +17,7 @@ class GCPDataset(Dataset):
         self.img_size = img_size
         self.transform = transform
 
-        label_path = os.path.join(root_dir, "curated_gcp_marks.json")
+        label_path = os.path.join(root_dir, "gcp_marks.json")
 
         with open(label_path) as f:
             self.labels = json.load(f)
