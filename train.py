@@ -15,7 +15,12 @@ dataset = GCPDataset(
     transform=get_train_transforms(512)
 )
 
-loader = DataLoader(dataset, batch_size=16, shuffle=True)
+loader = DataLoader(
+    dataset,
+    batch_size=16,
+    shuffle=True,
+    num_workers=0
+)
 
 
 model = GCPModel().to(device)
@@ -36,7 +41,10 @@ for epoch in range(EPOCHS):
 
     total_loss = 0
 
-    for images, keypoints, labels in loader:
+    for i, (images, keypoints, labels) in enumerate(loader):
+
+        if i % 10 == 0:
+            print("batch", i)
 
         images = images.to(device)
         keypoints = keypoints.to(device)
