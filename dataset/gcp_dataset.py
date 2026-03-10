@@ -43,6 +43,10 @@ class GCPDataset(Dataset):
         img_path = os.path.join(self.root_dir, rel_path)
 
         image = cv2.imread(img_path)
+
+        if image is None:
+            return self.__getitem__((idx + 1) % len(self))
+
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
         h, w = image.shape[:2]
@@ -57,7 +61,7 @@ class GCPDataset(Dataset):
 
         if shape is None:
             shape = "Cross"   
-            
+
         shape_label = self.shape_map[shape]
 
         # resize image
