@@ -17,9 +17,10 @@ dataset = GCPDataset(
 
 loader = DataLoader(
     dataset,
-    batch_size=16,
+    batch_size=32,
     shuffle=True,
-    num_workers=0
+    num_workers=2,
+    pin_memory=True
 )
 
 
