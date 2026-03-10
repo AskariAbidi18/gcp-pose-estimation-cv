@@ -40,7 +40,8 @@ class GCPDataset(Dataset):
         rel_path = self.image_paths[idx]
         label = self.labels[rel_path]
 
-        img_path = os.path.join(self.root_dir, rel_path)
+        img_name = os.path.basename(rel_path)
+        img_path = os.path.join("/content/train_resized", img_name)
 
         image = cv2.imread(img_path)
 
