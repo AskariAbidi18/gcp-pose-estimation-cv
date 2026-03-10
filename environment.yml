@@ -1,0 +1,39 @@
+name: gcp-pose-estimation
+
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+
+  # Core ML
+  - pytorch
+  - torchvision
+  - cpuonly
+
+  # Data + Math
+  - numpy
+  - pandas
+  - scikit-learn
+
+  # Image processing
+  - opencv
+  - pillow
+
+  # Visualization
+  - matplotlib
+  - seaborn
+
+  # Notebook
+  - jupyter
+  - notebook
+
+  # Utilities
+  - tqdm
+
+  # Pip dependencies
+  - pip
+  - pip:
+      - albumentations
