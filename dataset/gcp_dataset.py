@@ -1,6 +1,7 @@
 import os
 import json
 import cv2
+from sqlalchemy import label
 import torch
 from torch.utils.data import Dataset
 
@@ -49,7 +50,14 @@ class GCPDataset(Dataset):
         x = label["mark"]["x"]
         y = label["mark"]["y"]
 
-        shape = label["verified_shape"]
+        shape = label.get("verified_shape", None)
+
+        if shape is None:
+            shape = label.get("shape", None)
+
+        if shape is None:
+            shape = "Cross"   
+            
         shape_label = self.shape_map[shape]
 
         # resize image
