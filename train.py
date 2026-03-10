@@ -32,7 +32,7 @@ shape_loss = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=3e-4)
 
 
-EPOCHS = 25
+EPOCHS = 10
 
 
 for epoch in range(EPOCHS):
