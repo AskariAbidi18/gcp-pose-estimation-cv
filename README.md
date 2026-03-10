@@ -268,6 +268,10 @@ Possible improvements include:
 
 ---
 
+#Model Weights
+
+* download model weights .pth file from - https://drive.google.com/file/d/1ORJ0dt16ceZMfzm7qc5nfD7MhjcsswxN/view?usp=sharing
+
 # Author
 
 Askari Abidi
