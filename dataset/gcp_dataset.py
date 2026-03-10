@@ -27,7 +27,8 @@ class GCPDataset(Dataset):
         self.shape_map = {
             "Cross": 0,
             "Square": 1,
-            "L-Shaped": 2
+            "L-Shaped": 2,
+            "L-Shape" : 2
         }
 
     def __len__(self):
