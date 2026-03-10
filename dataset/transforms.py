@@ -14,7 +14,7 @@ def get_train_transforms(img_size):
             A.GaussNoise(p=0.2),
 
         ],
-        keypoint_params=A.KeypointParams(format="xy")
+        keypoint_params=A.KeypointParams(format="xy", remove_invisible=False)
     )
 
 
